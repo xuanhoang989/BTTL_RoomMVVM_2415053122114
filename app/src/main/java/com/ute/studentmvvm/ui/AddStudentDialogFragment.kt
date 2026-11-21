@@ -6,13 +6,20 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ute.studentmvvm.data.AppDatabase
 import com.ute.studentmvvm.databinding.DialogAddStudentBinding
 import com.ute.studentmvvm.model.Student
+import com.ute.studentmvvm.repository.StudentRepository
 import com.ute.studentmvvm.viewmodel.StudentViewModel
+import com.ute.studentmvvm.viewmodel.StudentViewModelFactory
 
 class AddStudentDialogFragment : DialogFragment() {
 
-    private val viewModel: StudentViewModel by activityViewModels()
+    private val viewModel: StudentViewModel by activityViewModels {
+        val database = AppDatabase.getDatabase(requireContext())
+        val repository = StudentRepository(database.studentDao())
+        StudentViewModelFactory(repository)
+    }
     private var _binding: DialogAddStudentBinding? = null
     private val binding get() = _binding!!
 

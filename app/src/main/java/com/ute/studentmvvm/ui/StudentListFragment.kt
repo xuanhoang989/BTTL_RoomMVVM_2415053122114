@@ -11,15 +11,22 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ute.studentmvvm.R
+import com.ute.studentmvvm.data.AppDatabase
 import com.ute.studentmvvm.databinding.FragmentStudentListBinding
 import com.ute.studentmvvm.model.Student
+import com.ute.studentmvvm.repository.StudentRepository
 import com.ute.studentmvvm.ui.adapter.StudentAdapter
 import com.ute.studentmvvm.viewmodel.StudentViewModel
+import com.ute.studentmvvm.viewmodel.StudentViewModelFactory
 import java.util.Locale
 
 class StudentListFragment : Fragment() {
 
-    private val viewModel: StudentViewModel by activityViewModels()
+    private val viewModel: StudentViewModel by activityViewModels {
+        val database = AppDatabase.getDatabase(requireContext())
+        val repository = StudentRepository(database.studentDao())
+        StudentViewModelFactory(repository)
+    }
     private var _binding: FragmentStudentListBinding? = null
     private val binding get() = _binding!!
 
