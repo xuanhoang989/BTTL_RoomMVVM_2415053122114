@@ -1,5 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -16,6 +17,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -37,6 +42,27 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+
+    // Room
+    implementation(libs.roomRuntime)
+    implementation(libs.roomKtx)
+    ksp(libs.roomCompiler)
+
+    // Lifecycle
+    implementation(libs.lifecycleViewModelKtx)
+    implementation(libs.lifecycleLiveDataKtx)
+
+    // Fragment
+    implementation(libs.fragmentKtx)
+
+    // Coroutines
+    implementation(libs.kotlinxCoroutinesAndroid)
+
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.converterGson)
+    implementation(libs.loggingInterceptor)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
